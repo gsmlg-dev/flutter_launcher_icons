@@ -1,39 +1,14 @@
-[![Flutter Community: flutter_launcher_icons](https://fluttercommunity.dev/_github/header/flutter_launcher_icons)](https://github.com/fluttercommunity/community)
 
-[![Build Status](https://travis-ci.org/fluttercommunity/flutter_launcher_icons.svg?branch=master)](https://travis-ci.org/MarkOSullivan94/flutter_launcher_icons) [![pub package](https://img.shields.io/pub/v/flutter_launcher_icons.svg)](https://pub.dartlang.org/packages/flutter_launcher_icons)
+# Flutter Launcher Icons Maker
 
-# Flutter Launcher Icons
+Fork from Flutter Launcher Icons. Add merge pull request of generate windows, macos and web icons.
 
 A command-line tool which simplifies the task of updating your Flutter app's launcher icon. Fully flexible, allowing you to choose what platform you wish to update the launcher icon for and if you want, the option to keep your old launcher icon in case you want to revert back sometime in the future.
 
 
 ## :sparkles: What's New
 
-#### Version 0.9.2 (22nd August 2021)
-
-- Fixed issue where success message printed even when exception occured (thanks to @happy-san)
-
-#### Version 0.9.1 (25th July 2021)
-
-- Upgraded `args` dependency to ^2.1.1 (thanks to @PiN73 and @comlaterra)
-- Upgraded `image` and `test` dependencies
-
-#### Version 0.9.0 (28th Feb 2021)
-
-- Null-safety support added (thanks to @SteveAlexander)
-- Added option to remove alpha channel for iOS icons (thanks to @SimonIT)
-
-#### Version 0.8.1 (2nd Oct 2020)
-
-- Fixed flavor support on windows (@slightfoot)
-
-#### Version 0.8.0 (12th Sept 2020)
-
-- Added flavours support (thanks to @sestegra & @jorgecoca)
-- Removed unassigned iOS icons (thanks to @melvinsalas)
-- Fixing formatting (thanks to @mreichelt)
-
-Want to see older changes? Be sure to check out the [Changelog](https://github.com/fluttercommunity/flutter_launcher_icons/blob/master/CHANGELOG.md).
+[Changelog](https://github.com/gsmlg-dev/flutter_launcher_icons_maker/blob/master/CHANGELOG.md).
 
 ## :book: Guide
 
