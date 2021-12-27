@@ -42,11 +42,10 @@ jobs:
         run: flutter test
 
       - name: 🚀 Release
-        uses: gsmlg/semantic-release-action@v3
+        uses: gsmlg/semantic-release-action@master
         id: semantic
         with:
-          release_name: generate_launcher_icons
-          working-directory: '.'
+          release_name: flutter_launcher_icons_maker
           dry_run: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
