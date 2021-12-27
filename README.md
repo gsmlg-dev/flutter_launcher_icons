@@ -18,11 +18,14 @@ Add your Flutter Launcher Icons configuration to your `pubspec.yaml` or create a
 An example is shown below. More complex examples [can be found in the example projects](https://github.com/fluttercommunity/flutter_launcher_icons/tree/master/example).
 ```yaml
 dev_dependencies:
-  flutter_launcher_icons: "^0.9.2"
+  flutter_launcher_icons_maker: "^0.10.1"
 
 flutter_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
+  macos: true
+  windows: true
+  web: true
   image_path: "assets/icon/icon.png"
 ```
 If you name your configuration file something other than `flutter_launcher_icons.yaml` or `pubspec.yaml` you will need to specify
@@ -30,7 +33,7 @@ the name of the file when running the package.
 
 ```
 flutter pub get
-flutter pub run flutter_launcher_icons:main -f <your config file name here>
+flutter pub run flutter_launcher_icons_maker:main -f <your config file name here>
 ```
 
 Note: If you are not using the existing `pubspec.yaml` ensure that your config file is located in the same directory as it.
@@ -41,7 +44,7 @@ After setting up the configuration, all that is left to do is run the package.
 
 ```
 flutter pub get
-flutter pub run flutter_launcher_icons:main
+flutter pub run flutter_launcher_icons_maker:main
 ```
 
 If you encounter any issues [please report them here](https://github.com/fluttercommunity/flutter_launcher_icons/issues).

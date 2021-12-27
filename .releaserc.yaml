@@ -7,7 +7,7 @@ plugins:
         echo ${nextRelease.version}
         sed -i 's;0.0.0;${nextRelease.version};g' pubspec.yaml ;
         sed -i 's;0.0.0;${nextRelease.version};g' lib/constants.dart ;
-        flutter pub login
+        bash pub_login.sh
       "publishCmd": |-
         echo pubhlish mirror ${nextRelease.version} ;
         flutter pub publish --force
