@@ -1,8 +1,6 @@
-name: flutter-mirror-release
+name: test-and-relase
 on:
   push:
-    paths:
-      - "**"
     branches:
       - +([0-9])?(.{+([0-9]),x}).x
       - master
