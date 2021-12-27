@@ -1,11 +1,15 @@
-extends: "semantic-release-monorepo"
 repositoryUrl: https://github.com/gsmlg-dev/flutter_launcher_icons
 plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
   - - "@semantic-release/exec"
-    - "prepareCmd": "echo ${nextRelease.version}"
-      "publishCmd": "echo pubhlish mirror ${nextRelease.version}"
+    - "prepareCmd": |-
+        echo ${nextRelease.version}
+        sed 's;0.0.0;${nextRelease.version};g' pubspec.yaml | tee pubspec.yaml ;
+        sed 's;0.0.0;${nextRelease.version};g' lib/constants.dart | tee lib/constants.dart ;
+      "publishCmd": |-
+        echo pubhlish mirror ${nextRelease.version} ;
+        flutter pub publish --dry-run
   - - '@semantic-release/github'
     - 'assets': 'CHANGELOG.md'
   - - '@semantic-release/changelog'
