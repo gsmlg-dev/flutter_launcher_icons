@@ -7,8 +7,8 @@ on:
       - main
       - next
       - next-major
-      - {name: 'beta', prerelease: true}
-      - {name: 'alpha', prerelease: true}
+      - beta
+      - alpha
 
 jobs:
   test:
