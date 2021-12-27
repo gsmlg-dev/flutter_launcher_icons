@@ -33,7 +33,7 @@ jobs:
       - name: 🐳 Install dependencies
         run: flutter pub get
 
-      - name: 🔔 Install dependencies
+      - name: 🔔 Run unit test
         run: flutter test
 
   release:
