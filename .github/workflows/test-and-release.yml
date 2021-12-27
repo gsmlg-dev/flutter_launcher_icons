@@ -1,0 +1,56 @@
+name: test-and-relase
+on:
+  push:
+    branches:
+      - +([0-9])?(.{+([0-9]),x}).x
+      - master
+      - main
+      - next
+      - next-major
+      - beta
+      - alpha
+
+jobs:
+  test-and-release:
+    name: Test and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🦋 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.8.1'
+          channel: 'stable'
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🔔 Run unit test
+        run: flutter test
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@master
+        id: semantic
+        with:
+          release_name: flutter_launcher_icons_maker
+          dry_run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+
+
+

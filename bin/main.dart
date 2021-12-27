@@ -1,7 +1,7 @@
-import 'package:flutter_launcher_icons/constants.dart';
-import 'package:flutter_launcher_icons/main.dart' as flutter_launcher_icons;
+import 'package:flutter_launcher_icons_maker/constants.dart';
+import 'package:flutter_launcher_icons_maker/main.dart' as flutter_launcher_icons;
 
 void main(List<String> arguments) {
-  print(introMessage('0.9.1'));
+  print(introMessage);
   flutter_launcher_icons.createIconsFromArguments(arguments);
 }

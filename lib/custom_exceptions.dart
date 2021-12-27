@@ -1,4 +1,4 @@
-import 'package:flutter_launcher_icons/utils.dart';
+import 'package:flutter_launcher_icons_maker/utils.dart';
 
 class InvalidAndroidIconNameException implements Exception {
   const InvalidAndroidIconNameException([this.message]);
