@@ -11,8 +11,7 @@ plugins:
       "publishCmd": |-
         echo pubhlish mirror ${nextRelease.version} ;
         flutter pub publish --force
-  - '@semantic-release/github'
-  - - "@semantic-release/git"
+  - - '@semantic-release/github'
     - "assets":
         - "CHANGELOG.md"
       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
