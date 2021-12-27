@@ -4,10 +4,10 @@ import 'package:args/args.dart';
 import 'package:test/test.dart';
 import 'package:yaml/yaml.dart' as yaml;
 import 'package:path/path.dart' as pathlib;
-import 'package:flutter_launcher_icons/ios.dart' as ios;
-import 'package:flutter_launcher_icons/android.dart' as android;
-import 'package:flutter_launcher_icons/main.dart' as main_dart;
-import 'package:flutter_launcher_icons/constants.dart' as constants;
+import 'package:flutter_launcher_icons_maker/ios.dart' as ios;
+import 'package:flutter_launcher_icons_maker/android.dart' as android;
+import 'package:flutter_launcher_icons_maker/main.dart' as main_dart;
+import 'package:flutter_launcher_icons_maker/constants.dart' as constants;
 
 // Unit tests for main.dart
 void main() {
