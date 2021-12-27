@@ -59,7 +59,7 @@ String warningPlatformDirectoryMissing(String platformName) =>
         ' enabled and have run `flutter create .`'
         ' in the root directory of your project.');
 
-const String currentVersion = '0.9.1';
+const String currentVersion = '0.0.0';
 const String introMessage = '''
   ════════════════════════════════════════════
      FLUTTER LAUNCHER ICONS (v$currentVersion)                               

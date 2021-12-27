@@ -4,14 +4,15 @@ plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
   - - "@semantic-release/exec"
-    - "prepareCmd" : "echo ${nextRelease.version}"
-      "publishCmd" : "echo pubhlish mirror ${nextRelease.version}"
+    - "prepareCmd": "echo ${nextRelease.version}"
+      "publishCmd": "echo pubhlish mirror ${nextRelease.version}"
   - - '@semantic-release/github'
     - 'assets': 'CHANGELOG.md'
   - - '@semantic-release/changelog'
     - 'changelogFile': 'CHANGELOG.md'
 branches:
   - +([0-9])?(.{+([0-9]),x}).x
+  - master
   - main
   - next
   - next-major

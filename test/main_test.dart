@@ -80,7 +80,7 @@ flutter_icons:
 
       // fails if forcing default file
       argResults = parser.parse(<String>['-f', constants.defaultConfigFile]);
-      expect(loadConfig(argResults), isNull);
+      expect(loadConfig(argResults), {});
     });
 
     test('custom', () async {
@@ -97,11 +97,11 @@ flutter_icons:
 
       // should fail if no argument
       argResults = parser.parse(<String>[]);
-      expect(loadConfig(argResults), isNull);
+      expect(loadConfig(argResults), {});
 
       // or missing file
       argResults = parser.parse(<String>['-f', 'missing_custom.yaml']);
-      expect(loadConfig(argResults), isNull);
+      expect(loadConfig(argResults), {});
     });
   });
 
@@ -265,37 +265,6 @@ flutter_icons:
         versionCodeExp
             .firstMatch('\n\n456\n## 102.23.44 (3rd Never 2020)\n123'),
         isNotNull);
-  });
-
-  test('Built-in version code matches that in CHANGELOG.md', () async {
-    final File changelog = File('CHANGELOG.md');
-    final String changelogContent = await changelog.readAsString();
-
-    // Search for & extract the first version code in the changelog.
-
-    final RegExpMatch? firstVersionMatch =
-        versionCodeExp.firstMatch(changelogContent);
-
-    expect(firstVersionMatch, isNotNull);
-
-    // firstVersion is the first found in the file, (not the oldest version).
-    final String firstVersion = firstVersionMatch!.group(1) ?? '';
-    expect(firstVersion, equals(constants.currentVersion));
-  });
-
-  test('Built-in version code matches that in README.md', () async {
-    final File readme = File('README.md');
-    final String readmeContent = await readme.readAsString();
-
-    final RegExpMatch? firstVersionMatch =
-        versionCodeExp.firstMatch(readmeContent);
-
-    // Eventually, versions might not be present in README.md...
-    if (firstVersionMatch != null) {
-      final String readmeVersion = firstVersionMatch.group(1) ?? '';
-
-      expect(readmeVersion, equals(constants.currentVersion));
-    }
   });
 
   test('pubspec.yaml version code matches the built-in version code.', () async {

@@ -64,7 +64,7 @@ Future<void> createIconsFromArguments(List<String> arguments) async {
   // Create icons
   if (!hasFlavors || argResults[fileOption] != null) {
     // Load the config file
-    final Map<String, dynamic>? yamlConfig =
+    final Map<String, dynamic> yamlConfig =
         loadConfigFileFromArgResults(argResults, verbose: true);
 
     try {
@@ -124,7 +124,7 @@ Future<void> createIconsFromConfig(Map<String, dynamic> config,
 ///
 /// Note: [cwd] was added to allow tests that require different
 ///  working directories to run at the same time, without conflicting.
-Map<String, dynamic>? loadConfigFileFromArgResults(ArgResults argResults,
+Map<String, dynamic> loadConfigFileFromArgResults(ArgResults argResults,
     {bool? verbose, String? cwd}) {
   verbose ??= false;
   cwd ??= './';
@@ -144,7 +144,7 @@ Map<String, dynamic>? loadConfigFileFromArgResults(ArgResults argResults,
       if (verbose) {
         stderr.writeln(e);
       }
-      return null;
+      return <String, dynamic>{};
     }
   }
 
@@ -166,7 +166,7 @@ Map<String, dynamic>? loadConfigFileFromArgResults(ArgResults argResults,
     }
   }
 
-  return null;
+  return <String, dynamic>{};
 }
 
 Map<String, dynamic> loadConfigFile(String path, String? fileOptionResult) {
