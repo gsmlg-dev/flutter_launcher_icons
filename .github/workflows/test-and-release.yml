@@ -46,6 +46,9 @@ jobs:
         id: semantic
         with:
           release_name: flutter_launcher_icons_maker
+          extra_plugins: |
+            @semantic-release/exec
+            @semantic-release/changelog
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
