@@ -7,9 +7,10 @@ plugins:
         echo ${nextRelease.version}
         sed 's;0.0.0;${nextRelease.version};g' pubspec.yaml | tee pubspec.yaml ;
         sed 's;0.0.0;${nextRelease.version};g' lib/constants.dart | tee lib/constants.dart ;
+        flutter pub login
       "publishCmd": |-
         echo pubhlish mirror ${nextRelease.version} ;
-        flutter pub publish --force --dry-run
+        flutter pub publish --force
   - '@semantic-release/github'
   - - "@semantic-release/git"
     - "assets":

@@ -46,7 +46,6 @@ jobs:
         id: semantic
         with:
           release_name: flutter_launcher_icons_maker
-          dry_run: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
