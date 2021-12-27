@@ -1,0 +1,106 @@
+name: flutter-mirror-release
+on:
+  push:
+    paths:
+      - "**"
+    branches:
+      - +([0-9])?(.{+([0-9]),x}).x
+      - master
+      - main
+      - next
+      - next-major
+      - {name: 'beta', prerelease: true}
+      - {name: 'alpha', prerelease: true}
+
+jobs:
+  test:
+    name: Test CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.8.1'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        run: flutter pub get
+
+      - name: 🔔 Install dependencies
+        run: flutter test
+
+  release:
+    name: Create semantic release
+    runs-on: ubuntu-latest
+    needs: [ test ]
+    outputs:
+      version: ${{ steps.semantic.outputs.new_release_version }}
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@v3
+        id: semantic
+        with:
+          release_name: generate_launcher_icons
+          working-directory: '.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+
+  build-apk:
+    runs-on: ubuntu-latest
+    name: Build apk
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        run: |
+          flutter pub get
+
+      - name: 🕸 Build APK
+        run: |
+          flutter build apk --build-name=${{ needs.release.outputs.version }}
+
+      - name: Create package file
+        run : tar zcf app.tar.gz -C build/app/outputs/flutter-apk/ app.apk app.apk.sha1
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: app.tar.gz
+          asset_name: app.tar.gz
+          tag: mirror-v${{ needs.release.outputs.version }}
+          overwrite: true
