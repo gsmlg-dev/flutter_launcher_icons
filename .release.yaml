@@ -1,4 +1,4 @@
-repositoryUrl: https://github.com/gsmlg-dev/flutter_launcher_icons
+repositoryUrl: https://github.com/gsmlg-dev/flutter_launcher_icons_maker.git
 plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
