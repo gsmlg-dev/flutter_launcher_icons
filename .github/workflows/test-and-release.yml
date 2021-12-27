@@ -42,7 +42,7 @@ jobs:
         run: flutter test
 
       - name: 🚀 Release
-        uses: gsmlg/semantic-release-action@v3
+        uses: gsmlg/semantic-release-action@master
         id: semantic
         with:
           release_name: flutter_launcher_icons_maker
