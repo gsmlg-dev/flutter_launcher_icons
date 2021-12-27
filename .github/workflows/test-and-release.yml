@@ -29,13 +29,13 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
 
-      - name: 🚀 Setup Flutter
+      - name: 🦋 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.8.1'
           channel: 'stable'
 
-      - name: 🐳 Install dependencies
+      - name: 📦 Install dependencies
         run: flutter pub get
 
       - name: 🔔 Run unit test
