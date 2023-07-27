@@ -6,10 +6,9 @@ import 'package:path/path.dart' as path;
 import 'package:yaml/yaml.dart';
 
 import 'abstract_platform.dart';
+import 'android.dart' as android_launcher_icons;
 import 'constants.dart';
 import 'custom_exceptions.dart';
-
-import 'android.dart' as android_launcher_icons;
 import 'ios.dart' as ios_launcher_icons;
 import 'macos.dart' as macos_launcher_icons;
 import 'web.dart' as web_launcher_icons;
@@ -190,7 +189,6 @@ Map<String, dynamic> loadConfigFile(String path, String? fileOptionResult) {
   return config;
 }
 
-
 bool isConfigValid(Map<String, dynamic> flutterIconsConfig) {
   for (final AbstractPlatform platform in platforms.values) {
     final String? complaint = platform.isConfigValid(flutterIconsConfig);
@@ -210,4 +208,3 @@ bool hasPlatformConfig(Map<String, dynamic> flutterIconsConfig) {
   }
   return false;
 }
-

@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:flutter_launcher_icons_maker/android.dart' as android;
+import 'package:flutter_launcher_icons_maker/constants.dart' as constants;
+import 'package:flutter_launcher_icons_maker/ios.dart' as ios;
+import 'package:flutter_launcher_icons_maker/main.dart' as main_dart;
+import 'package:path/path.dart' as pathlib;
 import 'package:test/test.dart';
 import 'package:yaml/yaml.dart' as yaml;
-import 'package:path/path.dart' as pathlib;
-import 'package:flutter_launcher_icons_maker/ios.dart' as ios;
-import 'package:flutter_launcher_icons_maker/android.dart' as android;
-import 'package:flutter_launcher_icons_maker/main.dart' as main_dart;
-import 'package:flutter_launcher_icons_maker/constants.dart' as constants;
 
 // Unit tests for main.dart
 void main() {
@@ -80,7 +80,7 @@ flutter_icons:
 
       // fails if forcing default file
       argResults = parser.parse(<String>['-f', constants.defaultConfigFile]);
-      expect(loadConfig(argResults), {});
+      expect(loadConfig(argResults), <String, dynamic>{});
     });
 
     test('custom', () async {
@@ -97,11 +97,11 @@ flutter_icons:
 
       // should fail if no argument
       argResults = parser.parse(<String>[]);
-      expect(loadConfig(argResults), {});
+      expect(loadConfig(argResults), <String, dynamic>{});
 
       // or missing file
       argResults = parser.parse(<String>['-f', 'missing_custom.yaml']);
-      expect(loadConfig(argResults), {});
+      expect(loadConfig(argResults), <String, dynamic>{});
     });
   });
 
@@ -251,7 +251,8 @@ flutter_icons:
 
   test('Version code regexp works.', () {
     expect(versionCodeExp.firstMatch('#### 0.0.1 (3rd Oct 2020)'), isNotNull);
-    expect(versionCodeExp.firstMatch('#### 0.0.1 (A Placeholder Date)'), isNotNull);
+    expect(versionCodeExp.firstMatch('#### 0.0.1 (A Placeholder Date)'),
+        isNotNull);
     expect(versionCodeExp.firstMatch('Not a version code.'), isNull);
     expect(versionCodeExp.firstMatch('## Not a version code'), isNull);
     expect(versionCodeExp.firstMatch('## 4.4 is not a .0 version'), isNull);
@@ -267,7 +268,8 @@ flutter_icons:
         isNotNull);
   });
 
-  test('pubspec.yaml version code matches the built-in version code.', () async {
+  test('pubspec.yaml version code matches the built-in version code.',
+      () async {
     final File pubspec = File('pubspec.yaml');
     final String pubspecContent = await pubspec.readAsString();
     final yaml.YamlMap yamlContent = yaml.loadYaml(pubspecContent);

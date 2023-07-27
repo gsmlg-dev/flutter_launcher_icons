@@ -93,9 +93,9 @@ class WindowsIconGenerator extends AbstractPlatform {
   }
 
   Future<void> _updateResources(String iconName, String? flavor) async {
-    final String filePathOriginalH = windowsRunnerFolder + 'resource.h';
-    final String filePathOriginalRC = windowsRunnerFolder + 'runner.rc';
-    final String filePathOriginalCPP = windowsRunnerFolder + 'win32_window.cpp';
+    const String filePathOriginalH = windowsRunnerFolder + 'resource.h';
+    const String filePathOriginalRC = windowsRunnerFolder + 'runner.rc';
+    const String filePathOriginalCPP = windowsRunnerFolder + 'win32_window.cpp';
 
     final String? flavorName = flavor != null ? '-' + flavor : '';
 
@@ -119,7 +119,7 @@ class WindowsIconGenerator extends AbstractPlatform {
     final List<String> newAppIconsSectionH = [];
     final List<String> newAppIconsSectionRC = [];
     int idiNumber = 101;
-    windowsIcons.forEach((iconType) {
+    for (var iconType in windowsIcons) {
       final String idi =
           'IDI_${iconName.toUpperCase()}$flavorName${iconType.baseName}';
 
@@ -128,7 +128,7 @@ class WindowsIconGenerator extends AbstractPlatform {
           '$idi              ICON                    \"$windowsAssetFolder/$iconName${iconType.name}\"');
 
       idiNumber += 1;
-    });
+    }
 
     // Write new resource.h in buffer
     final bufferNewResourcesH = StringBuffer();
@@ -139,15 +139,15 @@ class WindowsIconGenerator extends AbstractPlatform {
         // Stop copying when receiving idis
         if (doKeep) {
           doKeep = false;
-          newAppIconsSectionH.forEach((line) {
-            bufferNewResourcesH.writeln(line);
-          });
+          newAppIconsSectionH.forEach(bufferNewResourcesH.writeln);
           // Insert newly created idis
         }
       }
       if (line == '')
         doKeep = true; // Start copying again with the first blank line
-      if (doKeep) bufferNewResourcesH.writeln(line);
+      if (doKeep) {
+        bufferNewResourcesH.writeln(line);
+      }
     }
 
     // write new header from buffer to file
@@ -164,15 +164,15 @@ class WindowsIconGenerator extends AbstractPlatform {
         // Stop copying when receiving idis
         if (doKeep) {
           doKeep = false;
-          newAppIconsSectionRC.forEach((line) {
-            bufferNewResourcesRC.writeln(line);
-          });
+          newAppIconsSectionRC.forEach(bufferNewResourcesRC.writeln);
           // Insert newly created resources
         }
       }
       if (line == '')
         doKeep = true; // Start copying again with the first blank line
-      if (doKeep) bufferNewResourcesRC.writeln(line);
+      if (doKeep) {
+        bufferNewResourcesRC.writeln(line);
+      }
     }
     final File newResourcesRC = File(filePathOriginalRC);
     await newResourcesRC.writeAsString(bufferNewResourcesRC.toString(),
@@ -190,8 +190,9 @@ class WindowsIconGenerator extends AbstractPlatform {
         newLoadIcon +=
             'LoadIcon(window_class.hInstance, MAKEINTRESOURCE($baseIdi));';
         bufferNewResourcesCPP.writeln(newLoadIcon);
-        if (line != newLoadIcon)
+        if (line != newLoadIcon) {
           needRewriteCPP = true;
+        }
         // Insert newly created resources
       } else
         bufferNewResourcesCPP.writeln(line);
