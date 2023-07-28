@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_launcher_icons_maker/android.dart' as android;
+import 'package:flutter_launcher_icons_maker/config/config.dart';
 import 'package:flutter_launcher_icons_maker/constants.dart';
 import 'package:test/test.dart';
 
@@ -12,9 +13,11 @@ void main() {
     expect(android.isCorrectMipmapDirectoryForAdaptiveIcon(path1), false);
     expect(android.isCorrectMipmapDirectoryForAdaptiveIcon(path2), false);
     expect(
-        android.isCorrectMipmapDirectoryForAdaptiveIcon(
-            androidAdaptiveXmlFolder(null)),
-        true);
+      android.isCorrectMipmapDirectoryForAdaptiveIcon(
+        androidAdaptiveXmlFolder(null),
+      ),
+      true,
+    );
   });
 
   test('Correct number of adaptive foreground icons', () {
@@ -31,14 +34,20 @@ void main() {
       'android': true,
       'ios': true
     };
-    expect(android.isCustomAndroidFile(flutterIconsConfig), false);
+    expect(
+      Config.fromJson(flutterIconsConfig).isCustomAndroidFile,
+      isFalse,
+    );
 
     final Map<String, dynamic> flutterIconsNewIconConfig = <String, dynamic>{
       'image_path': 'assets/images/icon-710x599.png',
       'android': 'New Icon',
       'ios': true
     };
-    expect(android.isCustomAndroidFile(flutterIconsNewIconConfig), true);
+    expect(
+      Config.fromJson(flutterIconsNewIconConfig).isCustomAndroidFile,
+      isTrue,
+    );
   });
 
   test('Prioritise image_path_android over image_path', () {
@@ -48,8 +57,10 @@ void main() {
       'android': 'New Icon',
       'ios': true
     };
-    expect(android.getAndroidIconPath(flutterIconsNewIconConfig),
-        'assets/images/icon-android.png');
+    expect(
+      Config.fromJson(flutterIconsNewIconConfig).getImagePathAndroid(),
+      equals('assets/images/icon-android.png'),
+    );
   });
 
   test('Transforming manifest without icon must add icon', () async {
@@ -61,7 +72,9 @@ void main() {
     await withTempFile('AndroidManifest.xml', (File androidManifestFile) async {
       androidManifestFile.writeAsStringSync(inputManifest);
       await android.overwriteAndroidManifestWithNewLauncherIcon(
-          'ic_other_icon_name', androidManifestFile);
+        'ic_other_icon_name',
+        androidManifestFile,
+      );
       expect(androidManifestFile.readAsStringSync(), equals(expectedManifest));
     });
   });
@@ -77,7 +90,9 @@ void main() {
     await withTempFile('AndroidManifest.xml', (File androidManifestFile) async {
       androidManifestFile.writeAsStringSync(inputManifest);
       await android.overwriteAndroidManifestWithNewLauncherIcon(
-          'ic_launcher', androidManifestFile);
+        'ic_launcher',
+        androidManifestFile,
+      );
       expect(androidManifestFile.readAsStringSync(), equals(expectedManifest));
     });
   });
@@ -92,7 +107,9 @@ void main() {
     await withTempFile('AndroidManifest.xml', (File androidManifestFile) async {
       androidManifestFile.writeAsStringSync(inputManifest);
       await android.overwriteAndroidManifestWithNewLauncherIcon(
-          'ic_launcher', androidManifestFile);
+        'ic_launcher',
+        androidManifestFile,
+      );
       expect(androidManifestFile.readAsStringSync(), equals(expectedManifest));
     });
   });
@@ -108,7 +125,9 @@ void main() {
     await withTempFile('AndroidManifest.xml', (File androidManifestFile) async {
       androidManifestFile.writeAsStringSync(inputManifest);
       await android.overwriteAndroidManifestWithNewLauncherIcon(
-          'ic_launcher', androidManifestFile);
+        'ic_launcher',
+        androidManifestFile,
+      );
       expect(androidManifestFile.readAsStringSync(), equals(expectedManifest));
     });
   });
@@ -124,7 +143,9 @@ void main() {
     await withTempFile('AndroidManifest.xml', (File androidManifestFile) async {
       androidManifestFile.writeAsStringSync(inputManifest);
       await android.overwriteAndroidManifestWithNewLauncherIcon(
-          'ic_launcher', androidManifestFile);
+        'ic_launcher',
+        androidManifestFile,
+      );
       expect(androidManifestFile.readAsStringSync(), equals(expectedManifest));
     });
   });
