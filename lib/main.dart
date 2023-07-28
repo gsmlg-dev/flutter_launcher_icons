@@ -25,10 +25,12 @@ const String flavorConfigFilePattern = r'^flutter_launcher_icons-(.*).yaml$';
 
 List<String> getFlavors() {
   final List<String> flavors = [];
-  for (var item in Directory('.').listSync()) {
+
+  for (FileSystemEntity item in Directory('.').listSync()) {
     if (item is File) {
-      final name = path.basename(item.path);
-      final match = RegExp(flavorConfigFilePattern).firstMatch(name);
+      final String name = path.basename(item.path);
+      final RegExpMatch? match =
+          RegExp(flavorConfigFilePattern).firstMatch(name);
       if (match != null) {
         flavors.add(match.group(1)!);
       }
@@ -63,7 +65,7 @@ Future<void> createIconsFromArguments(List<String> arguments) async {
   logger.verbose('Received args ${argResults.arguments}');
 
   if (argResults[helpFlag]) {
-    stdout.writeln('Generates icons for iOS and Android');
+    stdout.writeln('Generates icons for Android, iOS, MacOS, Windows and Web');
     stdout.writeln(parser.usage);
     exit(0);
   }

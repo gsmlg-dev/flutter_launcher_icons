@@ -1,10 +1,13 @@
-# Flutter Launcher Icons
+# Flutter Launcher Icons Maker
 
-[![Flutter Community: flutter_launcher_icons](https://fluttercommunity.dev/_github/header/flutter_launcher_icons)](https://github.com/fluttercommunity/community)
-
-[![pub package](https://img.shields.io/pub/v/flutter_launcher_icons.svg)](https://pub.dartlang.org/packages/flutter_launcher_icons)
+Fork from Flutter Launcher Icons. Add merge pull request of generate windows, macos and web icons.
 
 A command-line tool which simplifies the task of updating your Flutter app's launcher icon. Fully flexible, allowing you to choose what platform you wish to update the launcher icon for and if you want, the option to keep your old launcher icon in case you want to revert back sometime in the future.
+
+
+## :sparkles: What's New
+
+[Changelog](https://github.com/gsmlg-dev/flutter_launcher_icons_maker/blob/master/CHANGELOG.md).
 
 ## :book: Guide
 
@@ -26,6 +29,7 @@ flutter pub run flutter_launcher_icons:generate -f <your config file name here>
 
 To override an existing config file, use the `-o` flag:
 
+
 ```shell
 flutter pub run flutter_launcher_icons:generate -o
 ```
@@ -38,10 +42,12 @@ An example is shown below. More complex examples [can be found in the example pr
 ```yaml
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
-
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
+  macos: true
+  windows: true
+  web: true
   image_path: "assets/icon/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
@@ -58,7 +64,16 @@ flutter_launcher_icons:
     image_path: "path/to/image.png"
 ```
 
+```shell
+flutter pub get
+flutter pub run flutter_launcher_icons_maker:main -f <your config file name here>
+```
+
+Note: If you are not using the existing `pubspec.yaml` ensure that your config file is located in the same directory as it.
+
+
 ### 2. Run the package
+
 
 After setting up the configuration, all that is left to do is run the package.
 

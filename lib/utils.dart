@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:image/image.dart';
 import 'package:path/path.dart' as path;
 
-import 'custom_exceptions.dart';
 
 Image createResizedImage(int iconSize, Image image) {
   if (image.width >= iconSize) {
@@ -31,8 +30,7 @@ void printStatus(String message) {
 }
 
 String generateError(Exception e, String? error) {
-  final errorOutput = error == null ? '' : ' \n$error';
-  return '\n✗ ERROR: ${(e).runtimeType.toString()}$errorOutput';
+  return '\n✗ ERROR: ${(e).runtimeType.toString()} \n$error';
 }
 
 // TODO(RatakondalaArun): Remove nullable return type

@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:flutter_launcher_icons/android.dart' as android;
-import 'package:flutter_launcher_icons/config/config.dart';
-import 'package:flutter_launcher_icons/ios.dart' as ios;
-import 'package:flutter_launcher_icons/main.dart' show defaultConfigFile;
-import 'package:flutter_launcher_icons/main.dart' as main_dart;
-import 'package:path/path.dart' show join;
+import 'package:flutter_launcher_icons_maker/android.dart' as android;
+import 'package:flutter_launcher_icons_maker/constants.dart' as constants;
+import 'package:flutter_launcher_icons_maker/ios.dart' as ios;
+import 'package:flutter_launcher_icons_maker/main.dart' as main_dart;
+import 'package:path/path.dart' as pathlib;
 import 'package:test/test.dart';
+import 'package:yaml/yaml.dart' as yaml;
 
 // Unit tests for main.dart
 void main() {
@@ -28,6 +28,9 @@ void main() {
   group('config file from args', () {
     // Create mini parser with only the wanted option, mocking the real one
     final ArgParser parser = ArgParser()
+      ..addOption(constants.fileOption, abbr: 'f');
+    final String testDir = pathlib.join(
+        '.dart_tool', 'flutter_launcher_icons', 'test', 'config_file');
       ..addOption(
         main_dart.fileOption,
         abbr: 'f',
@@ -41,11 +44,21 @@ void main() {
     final String testDir =
         join('.dart_tool', 'flutter_launcher_icons', 'test', 'config_file');
 
-    late String currentDirectory;
+    String currentDirectory = testDir;
     Future<void> setCurrentDirectory(String path) async {
-      path = join(testDir, path);
-      await Directory(path).create(recursive: true);
-      Directory.current = path;
+      currentDirectory = pathlib.join(testDir, path);
+      await Directory(currentDirectory).create(recursive: true);
+    }
+
+    File getFile(String filename) {
+      final String path = pathlib.join(currentDirectory, filename);
+
+      return File(path);
+    }
+
+    Map<String, dynamic>? loadConfig(ArgResults args) {
+      return main_dart.loadConfigFileFromArgResults(args,
+          cwd: currentDirectory);
     }
 
     setUp(() {
@@ -67,6 +80,7 @@ flutter_launcher_icons:
       expect(config, isNotNull);
       expect(config!.android, isTrue);
     });
+
     test('default_use_pubspec', () async {
       await setCurrentDirectory('pubspec_only');
       await File('pubspec.yaml').writeAsString('''
@@ -99,11 +113,11 @@ flutter_launcher_icons:
 
       // should fail if no argument
       argResults = parser.parse(<String>[]);
-      expect(main_dart.loadConfigFileFromArgResults(argResults), isNull);
+      expect(loadConfig(argResults), <String, dynamic>{});
 
       // or missing file
       argResults = parser.parse(<String>['-f', 'missing_custom.yaml']);
-      expect(main_dart.loadConfigFileFromArgResults(argResults), isNull);
+      expect(loadConfig(argResults), <String, dynamic>{});
     });
   });
 
@@ -111,7 +125,8 @@ flutter_launcher_icons:
     final Map<String, dynamic> flutterIconsConfig = <String, dynamic>{
       'image_path': 'assets/images/icon-710x599.png',
       'android': true,
-      'ios': true
+      'ios': true,
+      'web': true,
     };
     final config = Config.fromJson(flutterIconsConfig);
     expect(
@@ -148,7 +163,8 @@ flutter_launcher_icons:
     final Map<String, dynamic> flutterIconsConfig = <String, dynamic>{
       'image_path': 'assets/images/icon-710x599.png',
       'android': true,
-      'ios': true
+      'ios': true,
+      'web': true,
     };
     final config = Config.fromJson(flutterIconsConfig);
     expect(config.hasPlatformConfig, isTrue);
@@ -191,10 +207,11 @@ flutter_launcher_icons:
     expect(config.isNeedingNewIOSIcon, isFalse);
   });
 
-  test('No new iOS icon needed - no iOS config', () {
+  test('No new web icon needed -- web: false', () {
     final Map<String, dynamic> flutterIconsConfig = <String, dynamic>{
       'image_path': 'assets/images/icon-710x599.png',
-      'android': true
+      'web': false,
+      'ios': true
     };
     final config = Config.fromJson(flutterIconsConfig);
     expect(config.isNeedingNewIOSIcon, isFalse);

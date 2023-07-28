@@ -1,4 +1,4 @@
-import 'package:flutter_launcher_icons/utils.dart';
+import 'package:flutter_launcher_icons_maker/utils.dart';
 
 /// Exception to be thrown whenever we have an invalid configuration
 class InvalidConfigException implements Exception {

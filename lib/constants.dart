@@ -84,7 +84,8 @@ final macOSIconsDirPath =
 final macOSContentsFilePath = path.join(macOSIconsDirPath, 'Contents.json');
 
 const String errorMissingImagePath =
-    'Missing "image_path" or "image_path_android" + "image_path_ios" within configuration';
+    'Missing "image_path" or "image_path_android" + "image_path_ios"'
+    ' + "image_path_web" within configuration';
 const String errorMissingPlatform =
     'No platform specified within config to generate icons for.';
 const String errorMissingRegularAndroid =
@@ -97,8 +98,29 @@ const String errorIncorrectIconName =
     'The icon name must contain only lowercase a-z, 0-9, or underscore: '
     'E.g. "ic_my_new_icon"';
 
-String introMessage(String currentVersion) => '''
+const String errorWebCustomLocationNotSupported =
+    'Icon generation for web does not support specification of a custom '
+    'icon location! Please manually save a copy of the prefered icon theme '
+    '(perhaps by making a copy and renaming it). Custom locations are not '
+    'supported.';
+
+String warningPlatformDirectoryMissing(String platformName) =>
+    generateWarning(' Not generating icons for $platformName.'
+        ' Platform $platformName is in config, but there is no'
+        ' matching directory. If you want to generate icons for'
+        ' $platformName, make sure you have support for $platformName'
+        ' enabled and have run `flutter create .`'
+        ' in the root directory of your project.');
+
+const String currentVersion = '0.0.0';
+const String introMessage = '''
   ════════════════════════════════════════════
      FLUTTER LAUNCHER ICONS (v$currentVersion)                               
   ════════════════════════════════════════════
   ''';
+
+const String fileOption = 'file';
+const String helpFlag = 'help';
+const String defaultConfigFile = 'flutter_launcher_icons.yaml';
+const String flavorConfigFilePattern = r'^flutter_launcher_icons-(.*).yaml$';
+

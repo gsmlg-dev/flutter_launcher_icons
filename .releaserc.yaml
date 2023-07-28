@@ -1,0 +1,28 @@
+repositoryUrl: https://github.com/gsmlg-dev/flutter_launcher_icons_maker.git
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  - - "@semantic-release/exec"
+    - "prepareCmd": |-
+        echo ${nextRelease.version}
+        sed -i 's;0.0.0;${nextRelease.version};g' pubspec.yaml ;
+        sed -i 's;0.0.0;${nextRelease.version};g' lib/constants.dart ;
+        bash pub_login.sh
+      "publishCmd": |-
+        echo pubhlish mirror ${nextRelease.version} ;
+        flutter pub publish --force
+  - - '@semantic-release/github'
+    - "assets":
+        - "CHANGELOG.md"
+      "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+  - - '@semantic-release/changelog'
+    - 'changelogFile': 'CHANGELOG.md'
+branches:
+  - +([0-9])?(.{+([0-9]),x}).x
+  - master
+  - main
+  - next
+  - next-major
+  - {name: 'beta', prerelease: true}
+  - {name: 'alpha', prerelease: true}
+
